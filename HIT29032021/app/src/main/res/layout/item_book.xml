@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_margin="10dp"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <TextView
+        android:textSize="20sp"
+        android:layout_marginLeft="10dp"
+        android:layout_margin="5dp"
+
+        android:textStyle="bold"
+        android:id="@+id/titleProduct"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+    <ImageView
+        android:layout_below="@+id/titleProduct"
+
+        android:id="@+id/imageProduct"
+        android:layout_width="90dp"
+        android:layout_height="160dp"/>
+    <TextView
+        android:layout_below="@+id/titleProduct"
+        android:textSize="20sp"
+        android:layout_marginLeft="10dp"
+        android:layout_toRightOf="@+id/imageProduct"
+        android:id="@+id/authorProduct"
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+    <TextView
+        android:layout_marginLeft="10dp"
+        android:layout_below="@+id/authorProduct"
+        android:layout_toRightOf="@+id/imageProduct"
+        android:id="@+id/priceProduct"
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+    <TextView
+        android:textSize="18sp"
+        android:layout_marginLeft="10dp"
+        android:layout_below="@id/priceProduct"
+        android:layout_toRightOf="@+id/imageProduct"
+        android:id="@+id/ratingProduct"
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+    <TextView
+        android:layout_marginTop="5dp"
+        android:textStyle="bold"
+        android:id="@+id/titleDes"
+        android:layout_marginLeft="10dp"
+        android:layout_below="@+id/ratingProduct"
+        android:layout_toRightOf="@+id/imageProduct"
+        android:text="Mô tả: "
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+    <TextView
+        android:layout_marginLeft="10dp"
+        android:layout_below="@+id/titleDes"
+        android:layout_toRightOf="@+id/imageProduct"
+        android:id="@+id/descriptionProduct"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+    <TextView
+        
+        android:layout_below="@id/descriptionProduct"
+        android:id="@+id/numberReview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+    <TextView
+
+        android:layout_toRightOf="@id/numberReview"
+        android:layout_below="@id/descriptionProduct"
+        android:id="@+id/category"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+    <TextView
+
+        android:layout_toRightOf="@+id/category"
+        android:layout_below="@id/descriptionProduct"
+        android:id="@+id/numberPage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+</RelativeLayout>
