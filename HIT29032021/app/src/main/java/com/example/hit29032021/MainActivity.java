@@ -1,9 +1,11 @@
 package com.example.hit29032021;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -24,19 +26,48 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
-    String url = "https://bookshopb.herokuapp.com/api/books";
-    RecyclerView recyclerView;
-    BookAdapter bookAdapter;
+    private static final String url = "https://bookshopb.herokuapp.com/api/books";
+    private static RecyclerView recyclerView;
+    private static BookAdapter bookAdapter;
+    private static List<Book> list;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        recyclerView = findViewById(R.id.recycleViewListBook);
+        list = new ArrayList<>();
+        bookAdapter = new BookAdapter(list, MainActivity.this);
+
+
         RequestQueue requestQueue = Volley.newRequestQueue(MainActivity.this);
-        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
             @Override
-            public void onResponse(JSONArray response) {
-                AnhXa(response);
+            public void onResponse(String response) {
+                String listBook = response;
+                try {
+                    JSONArray jsonArray = new JSONArray(listBook);
+                    for(int i = 0; i < jsonArray.length(); i++){
+                        JSONObject jsonObject = jsonArray.getJSONObject(i);
+                        String TitleBook = jsonObject.getString("title");
+                        String AuthorBook = jsonObject.getString("author");
+                        String ImageLinkBook = jsonObject.getString("imageLink");
+                        String DesBook = jsonObject.getString("description");
+                        int PriceBook = jsonObject.getInt("price");
+                        int RateStarBook = jsonObject.getInt("rateStar");
+                        int NumberReview = jsonObject.getInt("numOfReview");
+                        int NumberPage = jsonObject.getInt("numOfPage");
+                        String Category = jsonObject.getString("categoty");
+                        list.add(new Book(ImageLinkBook, TitleBook, AuthorBook, NumberReview, PriceBook, DesBook, Category, RateStarBook, NumberPage));
+                        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(MainActivity.this, RecyclerView.VERTICAL, false);
+                        recyclerView.setLayoutManager(linearLayoutManager);
+                        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(MainActivity.this, linearLayoutManager.getOrientation());
+                        recyclerView.addItemDecoration(dividerItemDecoration);
+                        recyclerView.setAdapter(bookAdapter);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
                 Toast.makeText(MainActivity.this, "Cập nhật dữ liệu thành công", Toast.LENGTH_SHORT).show();
             }
         }, new Response.ErrorListener() {
@@ -45,35 +76,56 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(MainActivity.this, "Lỗi cập nhật dữ liệu", Toast.LENGTH_LONG).show();
             }
         });
-        requestQueue.add(jsonArrayRequest);
-
-    }
-    private void AnhXa(JSONArray jsonArray)
-    {
-        recyclerView = findViewById(R.id.recycleViewListBook);
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(MainActivity.this, RecyclerView.VERTICAL, false);
-        recyclerView.setLayoutManager(linearLayoutManager);
-        List<Book> list = new ArrayList<>();
-        for(int i = 0; i < jsonArray.length(); i++)
-        {
-            try {
-                JSONObject jsonObject = jsonArray.getJSONObject(i);
-                String TitleBook = jsonObject.getString("title");
-                String AuthorBook = jsonObject.getString("author");
-                String ImageLinkBook = jsonObject.getString("imageLink");
-                String DesBook = jsonObject.getString("description");
-                int PriceBook = jsonObject.getInt("price");
-                int RateStarBook = jsonObject.getInt("rateStar");
-                int NumberReview = jsonObject.getInt("numOfReview");
-                int NumberPage = jsonObject.getInt("numOfPage");
-                String Category = jsonObject.getString("categoty");
-                list.add(new Book(ImageLinkBook, TitleBook, AuthorBook, NumberReview, PriceBook, DesBook, Category, RateStarBook, NumberPage));
-
-            } catch (JSONException e) {
-                e.printStackTrace();
+//        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
+//            @Override
+//            public void onResponse(JSONArray response) {
+//                JSONArray jsonArray = response;
+//                for(int i = 0; i < jsonArray.length(); i++)
+//                {
+//                    try {
+//                        JSONObject jsonObject = jsonArray.getJSONObject(i);
+//                        String TitleBook = jsonObject.getString("title");
+//                        String AuthorBook = jsonObject.getString("author");
+//                        String ImageLinkBook = jsonObject.getString("imageLink");
+//                        String DesBook = jsonObject.getString("description");
+//                        int PriceBook = jsonObject.getInt("price");
+//                        int RateStarBook = jsonObject.getInt("rateStar");
+//                        int NumberReview = jsonObject.getInt("numOfReview");
+//                        int NumberPage = jsonObject.getInt("numOfPage");
+//                        String Category = jsonObject.getString("categoty");
+//                        list.add(new Book(ImageLinkBook, TitleBook, AuthorBook, NumberReview, PriceBook, DesBook, Category, RateStarBook, NumberPage));
+//                        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(MainActivity.this, RecyclerView.VERTICAL, false);
+//                        recyclerView.setLayoutManager(linearLayoutManager);
+//                        recyclerView.setAdapter(bookAdapter);
+//                    } catch (JSONException e) {
+//                        e.printStackTrace();
+//                    }
+//                }
+//                Toast.makeText(MainActivity.this, "Cập nhật dữ liệu thành công", Toast.LENGTH_SHORT).show();
+//            }
+//        }, new Response.ErrorListener() {
+//            @Override
+//            public void onErrorResponse(VolleyError error) {
+//                Toast.makeText(MainActivity.this, "Lỗi cập nhật dữ liệu", Toast.LENGTH_LONG).show();
+//            }
+//        });
+        requestQueue.add(stringRequest);
+        bookAdapter.setIOnClicktem(new IOnClickItem() {
+            @Override
+            public void iClickItem(Book book) {
+                Intent intent = new Intent(MainActivity.this, InfoBook.class);
+                intent.putExtra("titleBook",book.getTitleProduct());
+                intent.putExtra("authorBook", book.getAuthorProduct());
+                intent.putExtra("priceBook", book.getPriceProduct());
+                intent.putExtra("rateNumber", book.getRateStar());
+                intent.putExtra("desBook", book.getDescriptionProduct());
+                intent.putExtra("numberReview", book.getNumberOfReview());
+                intent.putExtra("category", book.getCategotyProduct());
+                intent.putExtra("numberPage", book.getNumberOfPage());
+                intent.putExtra("imgBook", book.getImageLink());
+                startActivity(intent);
             }
-        }
-        bookAdapter = new BookAdapter(list, MainActivity.this);
-        recyclerView.setAdapter(bookAdapter);
+        });
     }
+
 }

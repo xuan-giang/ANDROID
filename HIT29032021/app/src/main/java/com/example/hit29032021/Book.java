@@ -1,6 +1,9 @@
 package com.example.hit29032021;
 
-public class Book {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public class Book implements Parcelable{
     private String titleProduct, authorProduct, publisherProduct, imageLink, imagePublicId, descriptionProduct, categotyProduct;
     private int releaseYear, priceProduct, numberOfReview, numberOfPage, rateStar;
 
@@ -41,6 +44,19 @@ public class Book {
 
         this.rateStar = rateStar;
     }
+
+    public static final Creator<Book> CREATOR = new Creator<Book>() {
+        @Override
+        public Book createFromParcel(Parcel in) {
+            return new Book(in);
+        }
+
+        @Override
+        public Book[] newArray(int size) {
+            return new Book[size];
+        }
+    };
+
     public String getTitleProduct() {
         return titleProduct;
     }
@@ -136,4 +152,42 @@ public class Book {
     public void setRateStar(int rateStar) {
         this.rateStar = rateStar;
     }
+
+
+    protected  Book(Parcel in) {
+        titleProduct = in.readString();
+        authorProduct = in.readString();
+        publisherProduct = in.readString();
+        imageLink = in.readString();
+        imagePublicId = in.readString();
+        descriptionProduct = in.readString();
+        categotyProduct = in.readString();
+        releaseYear = in.readInt();
+        priceProduct = in.readInt();
+        numberOfReview = in.readInt();
+        numberOfPage = in.readInt();
+        rateStar = in.readInt();
+    }
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(titleProduct);
+        dest.writeString(authorProduct);
+        dest.writeString(publisherProduct);
+        dest.writeString(imageLink);
+        dest.writeString(imagePublicId);
+        dest.writeString(descriptionProduct);
+        dest.writeString(categotyProduct);
+        dest.writeInt(releaseYear);
+        dest.writeInt(priceProduct);
+        dest.writeInt(numberOfReview);
+        dest.writeInt(numberOfPage);
+        dest.writeInt(rateStar);
+    }
+
+
 }

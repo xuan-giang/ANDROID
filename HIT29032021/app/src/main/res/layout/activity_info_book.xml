@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_margin="10dp"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <TextView
+        android:textSize="20sp"
+        android:layout_marginLeft="10dp"
+        android:layout_margin="5dp"
+
+        android:textStyle="bold"
+        android:id="@+id/titleProduct"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+    <ImageView
+        android:layout_below="@+id/titleProduct"
+
+        android:id="@+id/imageProduct"
+        android:layout_width="120dp"
+        android:layout_height="200dp"/>
+    <TextView
+        android:layout_below="@+id/titleProduct"
+        android:textSize="20sp"
+        android:layout_marginLeft="10dp"
+        android:layout_toRightOf="@+id/imageProduct"
+        android:id="@+id/authorProduct"
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+    <TextView
+        android:layout_marginLeft="10dp"
+        android:layout_below="@+id/authorProduct"
+        android:layout_toRightOf="@+id/imageProduct"
+        android:id="@+id/priceProduct"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+         />
+    <TextView
+        android:textSize="25sp"
+        android:layout_marginLeft="10dp"
+        android:layout_below="@id/priceProduct"
+        android:layout_toRightOf="@+id/imageProduct"
+        android:id="@+id/ratingProduct"
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:drawableRight="@drawable/star" />
+    <TextView
+        android:layout_marginTop="5dp"
+        android:textStyle="bold"
+        android:id="@+id/titleDes"
+        android:textSize="16sp"
+        android:layout_marginLeft="10dp"
+        android:layout_below="@+id/ratingProduct"
+        android:layout_toRightOf="@+id/imageProduct"
+        android:text="Mô tả: "
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+    <TextView
+        android:layout_marginLeft="10dp"
+        android:layout_below="@+id/titleDes"
+        android:layout_toRightOf="@+id/imageProduct"
+        android:id="@+id/descriptionProduct"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <LinearLayout
+        android:layout_centerInParent="true"
+
+
+        android:id="@+id/thanhTT"
+        android:layout_below="@+id/imageProduct"
+        android:weightSum="3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+
+            android:layout_weight="1"
+            android:id="@+id/numberReview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+        <TextView
+
+            android:layout_weight="1"
+            android:id="@+id/categoryProduct"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+        <TextView
+
+            android:layout_weight="1"
+            android:id="@+id/numberPage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_centerInParent="true"
+        android:layout_below="@+id/thanhTT"
+        android:weightSum="4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <RatingBar
+            android:layout_weight="0"
+            android:id="@+id/rating"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:numStars="5"
+            android:rating="2.5"
+            />
+        <Button
+            android:layout_weight="3"
+            android:id="@+id/buttonSubmitRate"
+            android:textSize="12sp"
+            android:text="Gửi đánh giá"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+
+
+</RelativeLayout>

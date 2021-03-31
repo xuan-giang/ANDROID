@@ -18,31 +18,39 @@ import java.util.List;
 public class BookAdapter extends RecyclerView.Adapter<BookAdapter.ViewHolder>{
     List<Book> list;
     Context context;
-
+    IOnClickItem iOnClickItem;
+    public void setIOnClicktem(IOnClickItem iOnClicktem) {
+        this.iOnClickItem = iOnClicktem;
+    }
     public BookAdapter(List<Book> list, Context context) {
         this.list = list;
         this.context = context;
     }
-
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
-        View view = layoutInflater.inflate(R.layout.item_book, parent, false);
+        View view = layoutInflater.inflate(R.layout.list_books, parent, false);
         return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.tvDesProduct.setText(list.get(position).getDescriptionProduct());
-        holder.tvPriceProduct.setText(list.get(position).getPriceProduct()+" ₫");
-        holder.tvRateStarProduct.setText(list.get(position).getRateStar()+"");
+//        holder.tvDesProduct.setText(list.get(position).getDescriptionProduct());
+//        holder.tvPriceProduct.setText(list.get(position).getPriceProduct()+" ₫");
+//        holder.tvRateStarProduct.setText(list.get(position).getRateStar()+"");
         holder.tvTitleProduct.setText(list.get(position).getTitleProduct());
-        holder.tvAuthorProduct.setText(list.get(position).getAuthorProduct());
-        holder.tvNumberReview.setText(list.get(position).getNumberOfReview()+" + lượt đánh giá");
-        holder.tvCategory.setText(list.get(position).getCategotyProduct());
-        holder.tvNumberPage.setText(list.get(position).getNumberOfPage()+ " trang");
+//        holder.tvAuthorProduct.setText("Tác giả: " + list.get(position).getAuthorProduct());
+//        holder.tvNumberReview.setText(list.get(position).getNumberOfReview()+" + lượt đánh giá");
+//        holder.tvCategory.setText(list.get(position).getCategotyProduct());
+//        holder.tvNumberPage.setText(list.get(position).getNumberOfPage()+ " trang");
         Glide.with(context).load(list.get(position).getImageLink()).into(holder.imgTitleProduct);
+        holder.imgTitleProduct.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                iOnClickItem.iClickItem(list.get(position));
+            }
+        });
     }
 
     @Override
@@ -55,15 +63,15 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.ViewHolder>{
         TextView tvTitleProduct, tvAuthorProduct, tvRateStarProduct, tvPriceProduct, tvDesProduct, tvNumberPage, tvNumberReview, tvCategory;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            imgTitleProduct = itemView.findViewById(R.id.imageProduct);
-            tvAuthorProduct = itemView.findViewById(R.id.authorProduct);
-            tvTitleProduct = itemView.findViewById(R.id.titleProduct);
-            tvRateStarProduct = itemView.findViewById(R.id.ratingProduct);
-            tvPriceProduct = itemView.findViewById(R.id.priceProduct);
-            tvDesProduct = itemView.findViewById(R.id.descriptionProduct);
-            tvNumberPage = itemView.findViewById(R.id.numberPage);
-            tvNumberReview = itemView.findViewById(R.id.numberReview);
-            tvCategory = itemView.findViewById(R.id.category);
+            imgTitleProduct = itemView.findViewById(R.id.imgBooks);
+//            tvAuthorProduct = itemView.findViewById(R.id.authorProduct);
+            tvTitleProduct = itemView.findViewById(R.id.titleBooks);
+//            tvRateStarProduct = itemView.findViewById(R.id.ratingProduct);
+//            tvPriceProduct = itemView.findViewById(R.id.priceProduct);
+//            tvDesProduct = itemView.findViewById(R.id.descriptionProduct);
+//            tvNumberPage = itemView.findViewById(R.id.numberPage);
+//            tvNumberReview = itemView.findViewById(R.id.numberReview);
+//            tvCategory = itemView.findViewById(R.id.category);
         }
     }
 
